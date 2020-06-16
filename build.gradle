@@ -1,0 +1,41 @@
+group 'com.xiao'
+version '1.0.0'
+
+// plugins
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'maven'
+
+// jvm version
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+buildDir = "out/output"
+
+repositories {
+    mavenCentral()
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
+    }
+}
+
+// 生成source源码包
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier 'sources'
+}
+
+artifacts {
+    archives sourceJar
+}
+
+// 执行自定义gradle wrapper task 自动生成gradlew脚本及配置，这里指定下载的Gradle版本
+task gradleWrapper(type: Wrapper) {
+    gradleVersion = '5.6.2'
+}
