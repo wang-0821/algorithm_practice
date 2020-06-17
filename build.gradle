@@ -1,3 +1,14 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion"
+    }
+}
+
 group 'com.xiao'
 version '1.0.0'
 
@@ -5,6 +16,7 @@ version '1.0.0'
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'maven'
+apply plugin: 'kotlin'
 
 // jvm version
 sourceCompatibility = 1.8
@@ -13,7 +25,7 @@ targetCompatibility = 1.8
 buildDir = "out/output"
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 idea {
@@ -23,6 +35,10 @@ idea {
         inheritOutputDirs = false
         outputDir = file("$buildDir/classes/main/")
     }
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 }
 
 // 生成source源码包
@@ -37,5 +53,5 @@ artifacts {
 
 // 执行自定义gradle wrapper task 自动生成gradlew脚本及配置，这里指定下载的Gradle版本
 task gradleWrapper(type: Wrapper) {
-    gradleVersion = '5.6.2'
+    gradleVersion = "$gradleVersion"
 }
